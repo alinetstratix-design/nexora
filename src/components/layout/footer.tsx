@@ -17,7 +17,7 @@ export const Footer = () => {
             <span className="text-xl font-bold">{siteConfig.name}</span>
           </div>
           <p className="text-sm text-gray-400">
-            Smart platform for schools, teachers and management systems.
+            {siteConfig.description}
           </p>
         </div>
 

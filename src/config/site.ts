@@ -23,6 +23,7 @@ export const siteConfig = {
       highlight: "Digital",
       line2: "Dominance",
       description: "Building Tech, Powering Media, Creating Products with absolute technical superiority.",
+      socialProof: "50+ founders joined",
     },
     services: {
       title: "Solutions for Every Stage",
@@ -58,8 +59,65 @@ export const siteConfig = {
       title: "Ready to launch your vision?",
       description: "Join hundreds of successful companies already scaling with our platform. Start your project today.",
       buttonText: "Start Project",
+      secondaryButtonText: "Talk to Expert",
+    },
+    faq: {
+      title: "Frequently Asked Questions",
+      subtitle: "Got questions?",
+      description: "We've answered the most common queries.",
+    },
+    about: {
+      title: "About",
+      subtitle: "Our Story",
+      description: "We are building smart solutions to simplify digital growth and empower founders.",
+      mission: "At Nexora, we aim to simplify how businesses manage their digital footprint, products, and daily growth operations.",
+      vision: "Our platform helps companies become more efficient, connected, and data-driven in a competitive landscape.",
+      valuesTitle: "Our Values",
+      valuesSubtitle: "What drives us",
+      valuesDescription: "Core principles behind Nexora",
     },
   },
+  stats: [
+    { label: "Schools", value: "500+" },
+    { label: "Users", value: "10k+" },
+    { label: "Products", value: "50+" },
+    { label: "Countries", value: "20+" },
+  ],
+  faqs: [
+    {
+      q: "Is Nexora free to use?",
+      a: "Yes, you can start with our free plan and upgrade anytime to access premium features.",
+    },
+    {
+      q: "Who is this platform for?",
+      a: "Founders, designers, and developers looking to accelerate their product launch.",
+    },
+    {
+      q: "How do I get started?",
+      a: "Simply browse our products or contact our expert team to discuss your project.",
+    },
+    {
+      q: "Is payment secure?",
+      a: "Yes, all transactions are secured with industry-standard payment gateways.",
+    },
+  ],
+  values: [
+    {
+      title: "Innovation",
+      description: "We build modern solutions for real problems.",
+      icon: "Zap",
+    },
+    {
+      title: "Security",
+      description: "Your data is safe and protected by elite standards.",
+      icon: "ShieldCheck",
+    },
+    {
+      title: "Community",
+      description: "Built for founders, designers, and visionaries.",
+      icon: "Users",
+    },
+  ],
   services: [
     {
       id: "web-dev",
@@ -187,18 +245,22 @@ export const siteConfig = {
     {
       title: "Discovery",
       description: "We dive deep into your goals, audience, and market to define the project scope.",
+      icon: "Lightbulb",
     },
     {
       title: "Design",
       description: "Our designers create wireframes and high-fidelity mockups of your vision.",
+      icon: "Palette",
     },
     {
       title: "Development",
       description: "Our engineers build your product using the latest technologies and best practices.",
+      icon: "Code",
     },
     {
       title: "Launch",
       description: "We conduct final testing and deploy your product to the world.",
+      icon: "Rocket",
     },
   ],
   portfolio: [

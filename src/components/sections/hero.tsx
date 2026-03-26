@@ -87,7 +87,7 @@ export const Hero = () => {
               ))}
             </div>
             <span className="text-sm text-white/70">
-              50+ founders joined
+              {siteConfig.sections.hero.socialProof}
             </span>
           </motion.div>
 

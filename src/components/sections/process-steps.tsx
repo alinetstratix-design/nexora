@@ -18,12 +18,7 @@ export const ProcessSteps = () => {
       <div className="mt-16 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 
         {(siteConfig.process as any[]).map((step: any, index: number) => {
-          const iconName =
-            index === 0 ? "Lightbulb" :
-              index === 1 ? "Component" :
-                index === 2 ? "Code2" : "Rocket";
-
-          const Icon = (Icons as any)[iconName];
+          const Icon = (Icons as any)[step.icon];
 
           return (
             <div

@@ -5,6 +5,7 @@ import { Portfolio } from "@/components/sections/portfolio";
 import { ProcessSteps } from "@/components/sections/process-steps";
 import { Testimonials } from "@/components/sections/testimonials";
 import { CallToAction } from "@/components/sections/call-to-action";
+import { FAQ } from "@/components/sections/faq-section";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <ServicesOverview />
       <ProductsShowcase />
       <ProcessSteps />
+      <FAQ />
       <CallToAction />
     </>
   );

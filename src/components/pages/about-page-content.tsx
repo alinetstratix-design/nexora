@@ -4,7 +4,7 @@ import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { SectionHeader } from "@/components/ui/section-header";
 import { siteConfig } from "@/config/site";
 import Image from "next/image";
-import { ShieldCheck, Zap, Users } from "lucide-react";
+import * as Icons from "lucide-react";
 
 export function AboutPageContent() {
   return (
@@ -14,10 +14,10 @@ export function AboutPageContent() {
       <section className="py-20 text-center bg-gray-50">
         <SectionWrapper>
           <h1 className="text-3xl md:text-5xl font-bold mb-4">
-            About {siteConfig.name}
+            {siteConfig.sections.about.title} {siteConfig.name}
           </h1>
           <p className="max-w-2xl mx-auto text-gray-600">
-            We are building smart solutions to simplify school management and empower teachers.
+            {siteConfig.sections.about.description}
           </p>
         </SectionWrapper>
       </section>
@@ -43,25 +43,21 @@ export function AboutPageContent() {
             </h2>
 
             <p className="text-gray-600 mb-4">
-              At {siteConfig.name}, we aim to simplify how schools manage teachers,
-              students, and daily operations.
+              {siteConfig.sections.about.mission}
             </p>
 
             <p className="text-gray-600">
-              Our platform helps schools become more efficient, connected,
-              and data-driven.
+              {siteConfig.sections.about.vision}
             </p>
 
             {/* STATS */}
             <div className="grid grid-cols-2 gap-6 mt-6">
-              <div>
-                <h3 className="text-xl font-bold">500+</h3>
-                <p className="text-sm text-gray-500">Schools</p>
-              </div>
-              <div>
-                <h3 className="text-xl font-bold">10k+</h3>
-                <p className="text-sm text-gray-500">Users</p>
-              </div>
+              {siteConfig.stats.slice(0, 2).map((stat) => (
+                <div key={stat.label}>
+                  <h3 className="text-xl font-bold">{stat.value}</h3>
+                  <p className="text-sm text-gray-500">{stat.label}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -72,36 +68,25 @@ export function AboutPageContent() {
         <SectionWrapper>
 
           <SectionHeader
-            title="Our Values"
-            subtitle="What drives us"
-            description="Core principles behind Nexora"
+            title={siteConfig.sections.about.valuesTitle}
+            subtitle={siteConfig.sections.about.valuesSubtitle}
+            description={siteConfig.sections.about.valuesDescription}
           />
 
           <div className="grid md:grid-cols-3 gap-6 mt-10">
 
-            <div className="bg-white p-6 rounded-xl border">
-              <Zap className="mb-3 text-blue-600" />
-              <h3 className="font-semibold mb-2">Innovation</h3>
-              <p className="text-sm text-gray-600">
-                We build modern solutions for real problems.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl border">
-              <ShieldCheck className="mb-3 text-blue-600" />
-              <h3 className="font-semibold mb-2">Security</h3>
-              <p className="text-sm text-gray-600">
-                Your data is safe and protected.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl border">
-              <Users className="mb-3 text-blue-600" />
-              <h3 className="font-semibold mb-2">Community</h3>
-              <p className="text-sm text-gray-600">
-                Built for schools, teachers and parents.
-              </p>
-            </div>
+            {siteConfig.values.map((value) => {
+              const Icon = (Icons as any)[value.icon];
+              return (
+                <div key={value.title} className="bg-white p-6 rounded-xl border">
+                  {Icon && <Icon className="mb-3 text-blue-600" />}
+                  <h3 className="font-semibold mb-2">{value.title}</h3>
+                  <p className="text-sm text-gray-600">
+                    {value.description}
+                  </p>
+                </div>
+              );
+            })}
 
           </div>
         </SectionWrapper>
