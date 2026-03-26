@@ -3,12 +3,12 @@
 import { motion } from "framer-motion";
 import React, { useRef, useState } from "react";
 
-export const Magnetic = ({ 
-  children, 
+export const Magnetic = ({
+  children,
   className,
-  strength = 0.2 
-}: { 
-  children: React.ReactNode; 
+  strength = 0.2,
+}: {
+  children: React.ReactNode;
   className?: string;
   strength?: number;
 }) => {
@@ -16,24 +16,35 @@ export const Magnetic = ({
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const handleMouse = (e: React.MouseEvent) => {
-    const { clientX, clientY } = e;
     if (!ref.current) return;
-    
-    const { height, width, left, top } = ref.current.getBoundingClientRect();
-    const middleX = clientX - (left + width / 2);
-    const middleY = clientY - (top + height / 2);
-    setPosition({ x: middleX * strength, y: middleY * strength });
+
+    const rect = ref.current.getBoundingClientRect();
+
+    const x = e.clientX - (rect.left + rect.width / 2);
+    const y = e.clientY - (rect.top + rect.height / 2);
+
+    setPosition({
+      x: x * strength,
+      y: y * strength,
+    });
   };
 
-  const reset = () => setPosition({ x: 0, y: 0 });
+  const reset = () => {
+    setPosition({ x: 0, y: 0 });
+  };
 
   return (
     <motion.div
       ref={ref}
       onMouseMove={handleMouse}
       onMouseLeave={reset}
-      animate={{ x: position.x, y: position.y }}
-      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+      animate={position}
+      transition={{
+        type: "spring",
+        stiffness: 200,
+        damping: 20,
+        mass: 0.2,
+      }}
       className={className}
     >
       {children}

@@ -3,61 +3,64 @@
 import { siteConfig } from "@/config/site";
 import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { SectionHeader } from "@/components/ui/section-header";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Quote, Star } from "lucide-react";
-import { motion } from "framer-motion";
 import Image from "next/image";
 
 export const Testimonials = () => {
   return (
-    <SectionWrapper id="testimonials">
+    <SectionWrapper id="testimonials" className="py-20 md:py-28 bg-white">
+
       <SectionHeader
         title={siteConfig.sections.testimonials.title}
         subtitle={siteConfig.sections.testimonials.subtitle}
         description={siteConfig.sections.testimonials.description}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {siteConfig.testimonials.map((testimonial, index) => (
-          <motion.div
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        {siteConfig.testimonials.map((testimonial) => (
+          <div
             key={testimonial.id}
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ delay: index * 0.1 }}
-            viewport={{ once: true }}
+            className="border rounded-2xl p-6 hover:shadow-md transition group relative"
           >
-            <Card className="h-full border-muted/50 relative overflow-hidden group">
-              <div className="absolute -top-4 -right-4 text-primary/5 group-hover:text-primary/10 transition-colors">
-                <Quote className="w-24 h-24 rotate-12" />
+            {/* ICON */}
+            <Quote className="absolute top-4 right-4 w-10 h-10 text-gray-100" />
+
+            {/* STARS */}
+            <div className="flex gap-1 mb-3 text-yellow-500">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <Star key={i} className="w-4 h-4 fill-current" />
+              ))}
+            </div>
+
+            {/* TEXT */}
+            <p className="text-sm text-gray-600 italic mb-6">
+              "{testimonial.quote}"
+            </p>
+
+            {/* USER */}
+            <div className="flex items-center gap-3 border-t pt-4">
+              <div className="relative w-10 h-10 rounded-full overflow-hidden">
+                <Image
+                  src={testimonial.avatar}
+                  alt={testimonial.name}
+                  fill
+                  className="object-cover"
+                />
               </div>
-              <CardContent className="pt-8">
-                <div className="flex gap-1 mb-4 text-yellow-500">
-                  {[1, 2, 3, 4, 5].map((i) => (
-                    <Star key={i} className="w-4 h-4 fill-current" />
-                  ))}
-                </div>
-                <p className="text-muted-foreground italic leading-relaxed relative z-10">
-                  "{testimonial.quote}"
+
+              <div>
+                <h4 className="text-sm font-semibold">
+                  {testimonial.name}
+                </h4>
+                <p className="text-xs text-gray-500">
+                  {testimonial.company}
                 </p>
-              </CardContent>
-              <CardFooter className="gap-4 pt-4 border-t bg-muted/20">
-                <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-background">
-                  <Image
-                    src={testimonial.avatar}
-                    alt={testimonial.name}
-                    fill
-                    className="object-cover"
-                    sizes="48px"
-                  />
-                </div>
-                <div>
-                  <h4 className="font-bold text-sm">{testimonial.name}</h4>
-                  <p className="text-xs text-muted-foreground">{testimonial.company}</p>
-                </div>
-              </CardFooter>
-            </Card>
-          </motion.div>
+              </div>
+            </div>
+          </div>
         ))}
+
       </div>
     </SectionWrapper>
   );

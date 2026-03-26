@@ -1,182 +1,156 @@
 "use client";
-
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
+import { Menu, X, ArrowRight } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Rocket } from "lucide-react";
+import { Magnetic } from "@/components/ui/magnetic";
 import { cn } from "@/lib/utils";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import Image from "next/image";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const { scrollY } = useScroll();
 
-  // Dynamic transformations based on scroll - Elite "nav-shrink" response
-  const navWidth = useTransform(scrollY, [0, 100], ["100%", "92%"]);
-  const navPadding = useTransform(scrollY, [0, 100], ["1.5rem", "0.6rem"]);
-  const logoScale = useTransform(scrollY, [0, 100], [1, 0.7]);
-  const navBg = useTransform(
-    scrollY,
-    [0, 100],
-    ["rgba(255, 255, 255, 0)", "rgba(255, 255, 255, 0.15)"] // 15-20% glassmorphism
-  );
-  const [isScrolled, setIsScrolled] = useState(false);
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setScrolled(latest > 50);
+  });
 
+  // Close mobile menu on route change
   useEffect(() => {
-    const unsubscribe = scrollY.on("change", (latest) => {
-      setIsScrolled(latest > 50);
-    });
-    return () => unsubscribe();
-  }, [scrollY]);
+    setIsOpen(false);
+  }, [pathname]);
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[100] flex justify-center pointer-events-none pt-2 md:pt-4 transition-all duration-700">
-      <motion.nav
-        style={{
-          width: navWidth,
-          padding: navPadding,
-          backgroundColor: navBg,
-        }}
+    <header
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 flex justify-center py-4",
+        scrolled ? "px-4" : "px-0"
+      )}
+    >
+      <motion.div
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className={cn(
-          "pointer-events-auto transition-all duration-700 flex items-center justify-center",
-          isScrolled
-            ? "rounded-full backdrop-blur-2xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.08)] mx-4 md:mx-auto max-w-6xl"
-            : "mx-0 max-w-none border-b border-white/5"
+          "relative flex items-center justify-between transition-all duration-500 ease-out",
+          scrolled
+            ? "w-full max-w-5xl px-8 h-16 rounded-[2rem] bg-white/80 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.1)]"
+            : "w-full max-w-7xl px-8 h-20 bg-transparent border-transparent"
         )}
       >
-        <div className="container mx-auto px-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 group">
-            <motion.div
-              style={{ scale: logoScale }}
-              className="relative w-[300px] md:w-[450px] h-[60px] md:h-[100px] transition-all duration-500 origin-left"
-            >
-              <Image
-                src="/logo.png"
-                alt={siteConfig.name}
-                fill
-                className="object-contain object-left"
-                priority
-                sizes="(max-width: 768px) 200px, 450px"
-              />
-            </motion.div>
-          </Link>
+        {/* LOGO */}
+        <Link href="/" className="flex items-center gap-3 group relative z-50">
+          <div className="relative w-8 h-8 rounded-xl bg-brand-blue/10 flex items-center justify-center overflow-hidden group-hover:scale-110 transition-transform duration-500">
+            <Image src="/logo.png" alt="logo" width={24} height={24} />
+            <div className="absolute inset-0 bg-brand-blue/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+          </div>
+          <span className={cn(
+            "font-black text-xl uppercase italic tracking-tighter transition-colors",
+            scrolled ? "text-brand-dark" : "text-white"
+          )}>
+            {siteConfig.name}
+          </span>
+        </Link>
 
-          {/* Desktop Nav with Pill Indicator */}
-          <div className="hidden md:flex items-center gap-1 bg-white/5 backdrop-blur-sm p-1 rounded-full relative border border-white/10">
-            {siteConfig.nav.map((item) => {
-              const isActive = pathname === item.href;
-              return (
+        {/* DESKTOP NAV */}
+        <nav className="hidden lg:flex items-center gap-1">
+          {siteConfig.nav.map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Magnetic key={item.title} strength={0.15}>
                 <Link
-                  key={item.title}
                   href={item.href}
-                  onMouseEnter={() => setHoveredLink(item.title)}
-                  onMouseLeave={() => setHoveredLink(null)}
                   className={cn(
-                    "relative px-6 py-2.5 text-[10px] font-black uppercase tracking-[0.25em] transition-all duration-300 z-10",
-                    isActive ? "text-brand-purple" : "text-brand-gray hover:text-brand-dark"
+                    "relative px-5 py-2 text-xs font-black uppercase tracking-widest transition-colors group",
+                    scrolled
+                      ? isActive ? "text-brand-blue" : "text-brand-gray hover:text-brand-dark"
+                      : isActive ? "text-white" : "text-white/60 hover:text-white"
                   )}
                 >
                   {item.title}
-                  {(hoveredLink === item.title || isActive) && (
+                  {/* Highlight bar */}
+                  {isActive && (
                     <motion.div
-                      layoutId="nav-pill"
-                      transition={{
-                        type: "spring",
-                        bounce: 0.15,
-                        duration: 0.6
-                      }}
-                      className={cn(
-                        "absolute inset-0 bg-white rounded-full shadow-lg -z-10",
-                        isActive && "border border-brand-purple/10"
-                      )}
+                      layoutId="nav-underline"
+                      className="absolute bottom-0 left-5 right-5 h-0.5 bg-brand-blue"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
                   )}
                 </Link>
-              );
-            })}
-          </div>
+              </Magnetic>
+            );
+          })}
+        </nav>
 
-          <div className="flex items-center gap-4">
+        {/* CTA */}
+        <div className="hidden lg:flex items-center gap-4">
+          <Magnetic strength={0.1}>
             <Button
-              size="lg"
-              className="hidden md:flex h-12 px-10 rounded-full font-black text-[11px] uppercase tracking-[0.25em] nexora-gradient hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-brand-purple/20 text-white border-none"
-            >
-              Start Project
-            </Button>
-
-            {/* Mobile Toggle */}
-            <motion.button
-              whileTap={{ scale: 0.9 }}
+              variant={scrolled ? "default" : "outline"}
               className={cn(
-                "md:hidden p-3 rounded-full transition-all duration-500 z-[110]",
-                isOpen ? "bg-white text-brand-dark" : "bg-white/10 backdrop-blur-md text-white border border-white/20"
+                "h-11 px-8 rounded-full font-black uppercase tracking-widest text-[10px] gap-2",
+                !scrolled && "border-white/20 text-white hover:bg-white hover:text-brand-dark"
               )}
-              onClick={() => setIsOpen(!isOpen)}
-              aria-label="Toggle Menu"
             >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </motion.button>
-          </div>
+              Get Started <ArrowRight className="w-3.5 h-3.5" />
+            </Button>
+          </Magnetic>
         </div>
 
-        {/* Full-Screen Mobile Drawer */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, x: "100%" }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed inset-0 bg-brand-dark/98 backdrop-blur-3xl z-[105] flex flex-col p-8 pt-32 md:hidden"
-            >
-              <div className="flex flex-col gap-6">
-                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white/30 mb-4">NAVIGATION</span>
-                {siteConfig.nav.map((item, idx) => {
-                  const isActive = pathname === item.href;
-                  return (
-                    <motion.div
-                      key={item.title}
-                      initial={{ opacity: 0, x: 40 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.2 + idx * 0.1 }}
-                    >
-                      <Link
-                        href={item.href}
-                        className={cn(
-                          "text-5xl font-black uppercase tracking-tighter transition-all flex items-center gap-4",
-                          isActive ? "text-brand-purple italic" : "text-white/40 hover:text-white"
-                        )}
-                        onClick={() => setIsOpen(false)}
-                      >
-                        {item.title}
-                        {isActive && <motion.div layoutId="mobile-dot" className="w-3 h-3 rounded-full bg-brand-purple" />}
-                      </Link>
-                    </motion.div>
-                  );
-                })}
-              </div>
-
-              <div className="mt-auto space-y-8">
-                <div className="flex flex-col gap-2">
-                  <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white/30">GET IN TOUCH</span>
-                  <a href={`mailto:${siteConfig.contact.email}`} className="text-xl font-bold text-white underline underline-offset-8 decoration-brand-purple/50">
-                    {siteConfig.contact.email}
-                  </a>
-                </div>
-                
-                <Button className="w-full h-20 rounded-3xl font-black text-xl uppercase tracking-[0.2em] nexora-gradient text-white border-none shadow-3xl shadow-brand-purple/40">
-                  START PROJECT
-                </Button>
-              </div>
-            </motion.div>
+        {/* MOBILE BUTTON */}
+        <button
+          className={cn(
+            "lg:hidden relative z-50 p-2 rounded-xl transition-colors",
+            scrolled ? "bg-brand-light text-brand-dark" : "bg-white/10 text-white"
           )}
-        </AnimatePresence>
-      </motion.nav>
-    </div>
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+      </motion.div>
+
+      {/* MOBILE MENU */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-x-4 top-24 z-50 p-8 rounded-[2.5rem] bg-white/90 backdrop-blur-2xl border border-brand-border shadow-2xl lg:hidden"
+          >
+            <nav className="flex flex-col gap-6 mb-10">
+              {siteConfig.nav.map((item, i) => (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                >
+                  <Link
+                    href={item.href}
+                    className={cn(
+                      "text-3xl font-black uppercase italic tracking-tighter transition-colors",
+                      pathname === item.href ? "text-brand-blue" : "text-brand-dark hover:text-brand-blue"
+                    )}
+                  >
+                    {item.title}
+                  </Link>
+                </motion.div>
+              ))}
+            </nav>
+
+            <Button className="w-full h-16 rounded-2xl text-lg font-black uppercase italic tracking-widest nexora-gradient">
+              Get Started <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   );
 };

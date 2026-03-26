@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { FloatingActions } from "@/components/ui/floating-actions";
 import { siteConfig } from "@/config/site";
 
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://nexora.example.com"),
@@ -55,7 +53,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
-      <body className={`${inter.className} min-h-screen flex flex-col bg-background text-foreground antialiased`}>
+      <body className={`min-h-screen flex flex-col bg-background text-foreground antialiased`}>
         <Navbar />
         <main className="flex-1 overflow-x-hidden">
           {children}
