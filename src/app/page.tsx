@@ -1,3 +1,4 @@
+export const unstable_instant = { prefetch: "static" };
 import { Hero } from "@/components/sections/hero";
 import { ServicesOverview } from "@/components/sections/services-overview";
 import { ProductsShowcase } from "@/components/sections/products-showcase";

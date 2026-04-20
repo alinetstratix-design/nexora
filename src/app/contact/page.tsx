@@ -1,3 +1,4 @@
+export const unstable_instant = { prefetch: "static" };
 import { Metadata } from "next";
 import { ContactPageContent } from "@/components/pages/contact-page-content";
 

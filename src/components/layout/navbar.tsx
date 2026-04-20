@@ -39,22 +39,36 @@ export const Navbar = () => {
         className={cn(
           "relative flex items-center justify-between transition-all duration-500 ease-out",
           scrolled
-            ? "w-full max-w-5xl px-8 h-16 rounded-[2rem] bg-white/80 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.1)]"
-            : "w-full max-w-7xl px-8 h-20 bg-transparent border-transparent"
+            ? "w-full max-w-5xl px-8 h-16 rounded-[2rem] bg-white/90 backdrop-blur-xl border border-slate-200/60 shadow-[0_20px_50px_rgba(0,0,0,0.1)]"
+            : "w-full max-w-7xl px-8 h-22 bg-white/50 backdrop-blur-md border border-slate-200/40 shadow-[0_10px_30px_rgba(0,0,0,0.05)]"
         )}
       >
         {/* LOGO */}
-        <Link href="/" className="flex items-center gap-3 group relative z-50">
-          <div className="relative w-8 h-8 rounded-xl bg-brand-blue/10 flex items-center justify-center overflow-hidden group-hover:scale-110 transition-transform duration-500">
-            <Image src="/logo.png" alt="logo" width={24} height={24} />
-            <div className="absolute inset-0 bg-brand-blue/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+        <Link href="/" className="flex items-center group relative z-50">
+          {/* Desktop Logo: Full version */}
+          <div className="hidden sm:flex relative h-11 w-[200px] items-center transition-transform hover:scale-105 duration-300">
+            <Image 
+              src="/logo.png" 
+              alt="Nexora Logo" 
+              width={200} 
+              height={44} 
+              className="h-11 w-full object-contain object-left" 
+              priority
+            />
           </div>
-          <span className={cn(
-            "font-black text-xl uppercase italic tracking-tighter transition-colors",
-            scrolled ? "text-brand-dark" : "text-white"
-          )}>
-            {siteConfig.name}
-          </span>
+          
+          {/* Mobile Logo: Just the 'N' icon */}
+          <div className="flex sm:hidden relative h-10 w-10 items-center justify-center overflow-hidden bg-white/50 backdrop-blur-md rounded-xl border border-slate-200 transition-transform active:scale-95 duration-300">
+            <Image 
+              src="/logo.png" 
+              alt="N Logo" 
+              width={200} 
+              height={44} 
+              className="h-8 w-auto max-w-none object-contain object-left" 
+              style={{ objectPosition: '0% 50%' }}
+              priority
+            />
+          </div>
         </Link>
 
         {/* DESKTOP NAV */}
@@ -69,7 +83,7 @@ export const Navbar = () => {
                     "relative px-5 py-2 text-xs font-black uppercase tracking-widest transition-colors group",
                     scrolled
                       ? isActive ? "text-brand-blue" : "text-brand-gray hover:text-brand-dark"
-                      : isActive ? "text-white" : "text-white/60 hover:text-white"
+                      : isActive ? "text-brand-blue" : "text-brand-dark hover:text-brand-blue"
                   )}
                 >
                   {item.title}
@@ -94,7 +108,7 @@ export const Navbar = () => {
               variant={scrolled ? "default" : "outline"}
               className={cn(
                 "h-11 px-8 rounded-full font-black uppercase tracking-widest text-[10px] gap-2",
-                !scrolled && "border-white/20 text-white hover:bg-white hover:text-brand-dark"
+                !scrolled && "border-slate-200 text-brand-dark hover:bg-slate-100"
               )}
             >
               Get Started <ArrowRight className="w-3.5 h-3.5" />
@@ -106,7 +120,7 @@ export const Navbar = () => {
         <button
           className={cn(
             "lg:hidden relative z-50 p-2 rounded-xl transition-colors",
-            scrolled ? "bg-brand-light text-brand-dark" : "bg-white/10 text-white"
+            scrolled ? "bg-brand-light text-brand-dark" : "bg-slate-100 text-brand-dark"
           )}
           onClick={() => setIsOpen(!isOpen)}
         >
