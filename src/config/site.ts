@@ -18,10 +18,12 @@ export const siteConfig: SiteConfig = {
   },
   nav: [
     { title: "Home", href: "/" },
-    { title: "Solutions", href: "#services" },
-    { title: "Portfolio", href: "#portfolio" },
-    { title: "Investment", href: "#pricing" },
-    { title: "Connect", href: "#contact" },
+    { title: "About", href: "/about" },
+    { title: "Services", href: "/services" },
+    { title: "Products", href: "/products" },
+    { title: "Portfolio", href: "/portfolio" },
+    { title: "Investment", href: "/investment" },
+    { title: "Connect", href: "/contact" },
   ],
   sections: {
     hero: {
