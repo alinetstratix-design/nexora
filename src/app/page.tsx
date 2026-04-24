@@ -1,24 +1,27 @@
-export const unstable_instant = { prefetch: "static" };
 import { Hero } from "@/components/sections/hero";
+import { Trust } from "@/components/sections/trust";
 import { ServicesOverview } from "@/components/sections/services-overview";
-import { ProductsShowcase } from "@/components/sections/products-showcase";
+import { LocalSEO } from "@/components/sections/local-seo";
 import { Portfolio } from "@/components/sections/portfolio";
-import { ProcessSteps } from "@/components/sections/process-steps";
+import { Pricing } from "@/components/sections/pricing-services";
 import { Testimonials } from "@/components/sections/testimonials";
 import { CallToAction } from "@/components/sections/call-to-action";
 import { FAQ } from "@/components/sections/faq-section";
+import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <Testimonials />
-      <Portfolio />
+      <Trust />
       <ServicesOverview />
-      <ProductsShowcase />
-      <ProcessSteps />
+      <LocalSEO />
+      <Portfolio />
+      <Pricing />
+      <Testimonials />
       <FAQ />
       <CallToAction />
+      <WhatsAppButton />
     </>
   );
 }

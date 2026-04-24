@@ -9,6 +9,12 @@ interface ProductPageProps {
   }>;
 }
 
+export async function generateStaticParams() {
+  return siteConfig.products.map((product) => ({
+    id: product.id,
+  }));
+}
+
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
   const { id } = await params;
   const product = siteConfig.products.find((p) => p.id === id);

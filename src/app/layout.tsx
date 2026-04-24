@@ -17,9 +17,17 @@ export const metadata: Metadata = {
     icon: "/icon.png",
     apple: "/icon.png",
   },
-  keywords: ["Startup", "Design", "Development", "SaaS", "Templates", "Elite UI", "Next.js"],
-  authors: [{ name: "Nexora Team" }],
-  creator: "Nexora",
+  keywords: [
+    "website developer Haridwar", 
+    "app developer Roorkee", 
+    "web design Haridwar", 
+    "software company Roorkee", 
+    "NexoraTech", 
+    "local business growth", 
+    "digital marketing Haridwar"
+  ],
+  authors: [{ name: "NexoraTech Team" }],
+  creator: "NexoraTech",
   openGraph: {
     type: "website",
     locale: "en_US",

@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 interface SectionHeaderProps {
   title: string;
@@ -16,26 +17,32 @@ export const SectionHeader = ({
   className,
 }: SectionHeaderProps) => {
   const alignmentClasses = {
-    left: "text-left",
-    center: "text-center mx-auto",
-    right: "text-right ml-auto",
+    left: "text-left items-start",
+    center: "text-center items-center mx-auto",
+    right: "text-right items-end ml-auto",
   };
 
   return (
-    <div className={cn("max-w-3xl mb-12", alignmentClasses[align], className)}>
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      className={cn("max-w-3xl mb-16 flex flex-col", alignmentClasses[align], className)}
+    >
       {subtitle && (
-        <span className="text-primary text-sm font-semibold uppercase tracking-wider mb-2 block">
+        <span className="px-4 py-1.5 rounded-2xl bg-orange-500/5 text-orange-600 dark:text-orange-400 text-[10px] font-bold uppercase tracking-[0.3em] mb-6 border border-orange-500/10">
           {subtitle}
         </span>
       )}
-      <h2 className="text-3xl md:text-4xl font-bold mb-4 tracking-tight">
+      <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight text-slate-900 dark:text-white leading-[1.1]">
         {title}
       </h2>
       {description && (
-        <p className="text-muted-foreground text-lg leading-relaxed">
+        <p className="text-slate-500 dark:text-slate-400 text-lg md:text-xl leading-relaxed max-w-2xl">
           {description}
         </p>
       )}
-    </div>
+    </motion.div>
   );
 };

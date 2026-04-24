@@ -24,8 +24,8 @@ export const SectionWrapper = ({
     <Component
       id={id}
       className={cn(
-        "py-16 md:py-24 overflow-hidden relative", 
-        withGlow && "before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_center,var(--primary-foreground)_0%,transparent_70%)] before:opacity-5",
+        "py-24 md:py-32 overflow-hidden relative", 
+        withGlow && "before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_center,var(--primary)_0%,transparent_70%)] before:opacity-[0.03] dark:before:opacity-[0.05]",
         className
       )}
     >

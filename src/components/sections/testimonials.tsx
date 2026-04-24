@@ -5,10 +5,11 @@ import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { SectionHeader } from "@/components/ui/section-header";
 import { Quote, Star } from "lucide-react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 export const Testimonials = () => {
   return (
-    <SectionWrapper id="testimonials" className="py-20 md:py-28 bg-white">
+    <SectionWrapper id="testimonials" className="py-24 md:py-32 bg-white dark:bg-slate-950">
 
       <SectionHeader
         title={siteConfig.sections.testimonials.title}
@@ -16,31 +17,32 @@ export const Testimonials = () => {
         description={siteConfig.sections.testimonials.description}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
 
-        {siteConfig.testimonials.map((testimonial) => (
-          <div
+        {siteConfig.testimonials.map((testimonial, index) => (
+          <motion.div
             key={testimonial.id}
-            className="border rounded-2xl p-6 hover:shadow-md transition group relative"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className="group relative bg-slate-50 dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 hover:border-orange-500/50 dark:hover:border-orange-900 transition-all duration-500"
           >
-            {/* ICON */}
-            <Quote className="absolute top-4 right-4 w-10 h-10 text-gray-100" />
-
             {/* STARS */}
-            <div className="flex gap-1 mb-3 text-yellow-500">
+            <div className="flex gap-1 mb-6 text-orange-500">
               {[1, 2, 3, 4, 5].map((i) => (
-                <Star key={i} className="w-4 h-4 fill-current" />
+                <Star key={i} className="w-3.5 h-3.5 fill-current" />
               ))}
             </div>
 
             {/* TEXT */}
-            <p className="text-sm text-gray-600 italic mb-6">
+            <blockquote className="text-slate-600 dark:text-slate-300 text-lg leading-relaxed mb-8 italic">
               "{testimonial.quote}"
-            </p>
+            </blockquote>
 
             {/* USER */}
-            <div className="flex items-center gap-3 border-t pt-4">
-              <div className="relative w-10 h-10 rounded-full overflow-hidden">
+            <div className="flex items-center gap-4 mt-auto">
+              <div className="relative w-12 h-12 rounded-2xl overflow-hidden shadow-md">
                 <Image
                   src={testimonial.avatar}
                   alt={testimonial.name}
@@ -50,18 +52,20 @@ export const Testimonials = () => {
               </div>
 
               <div>
-                <h4 className="text-sm font-semibold">
+                <h4 className="text-base font-bold text-slate-900 dark:text-slate-50">
                   {testimonial.name}
                 </h4>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs font-bold text-orange-600 dark:text-orange-400 uppercase tracking-widest">
                   {testimonial.company}
                 </p>
               </div>
             </div>
-          </div>
+
+            <Quote className="absolute bottom-8 right-8 w-12 h-12 text-slate-200 dark:text-slate-800 opacity-20" />
+          </motion.div>
         ))}
 
       </div>
     </SectionWrapper>
   );
-};
+};

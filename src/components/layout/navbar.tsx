@@ -39,8 +39,8 @@ export const Navbar = () => {
         className={cn(
           "relative flex items-center justify-between transition-all duration-500 ease-out",
           scrolled
-            ? "w-full max-w-5xl px-8 h-16 rounded-[2rem] bg-white/90 backdrop-blur-xl border border-slate-200/60 shadow-[0_20px_50px_rgba(0,0,0,0.1)]"
-            : "w-full max-w-7xl px-8 h-22 bg-white/50 backdrop-blur-md border border-slate-200/40 shadow-[0_10px_30px_rgba(0,0,0,0.05)]"
+            ? "w-full max-w-5xl px-8 h-16 rounded-[2rem] bg-white/80 backdrop-blur-xl border-none shadow-[0_20px_50px_rgba(0,0,0,0.05)]"
+            : "w-full max-w-7xl px-8 h-22 bg-transparent border-none"
         )}
       >
         {/* LOGO */}
@@ -82,8 +82,8 @@ export const Navbar = () => {
                   className={cn(
                     "relative px-5 py-2 text-xs font-black uppercase tracking-widest transition-colors group",
                     scrolled
-                      ? isActive ? "text-brand-blue" : "text-brand-gray hover:text-brand-dark"
-                      : isActive ? "text-brand-blue" : "text-brand-dark hover:text-brand-blue"
+                      ? isActive ? "text-orange-600" : "text-slate-500 hover:text-slate-900"
+                      : isActive ? "text-orange-600" : "text-slate-900 hover:text-orange-600"
                   )}
                 >
                   {item.title}
@@ -91,7 +91,7 @@ export const Navbar = () => {
                   {isActive && (
                     <motion.div
                       layoutId="nav-underline"
-                      className="absolute bottom-0 left-5 right-5 h-0.5 bg-brand-blue"
+                      className="absolute bottom-0 left-5 right-5 h-0.5 bg-orange-600"
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -101,17 +101,15 @@ export const Navbar = () => {
           })}
         </nav>
 
-        {/* CTA */}
         <div className="hidden lg:flex items-center gap-4">
           <Magnetic strength={0.1}>
             <Button
-              variant={scrolled ? "default" : "outline"}
+              onClick={() => window.open(siteConfig.contact.whatsapp, "_blank")}
               className={cn(
-                "h-11 px-8 rounded-full font-black uppercase tracking-widest text-[10px] gap-2",
-                !scrolled && "border-slate-200 text-brand-dark hover:bg-slate-100"
+                "h-11 px-8 rounded-full font-black uppercase tracking-widest text-[10px] gap-2 nexora-gradient text-white shadow-lg shadow-orange-500/10 transition-transform hover:scale-105 active:scale-95 border-none"
               )}
             >
-              Get Started <ArrowRight className="w-3.5 h-3.5" />
+              Get Free Quote <ArrowRight className="w-3.5 h-3.5" />
             </Button>
           </Magnetic>
         </div>
@@ -120,7 +118,7 @@ export const Navbar = () => {
         <button
           className={cn(
             "lg:hidden relative z-50 p-2 rounded-xl transition-colors",
-            scrolled ? "bg-brand-light text-brand-dark" : "bg-slate-100 text-brand-dark"
+            scrolled ? "bg-slate-100 text-slate-900" : "bg-slate-100 text-slate-900"
           )}
           onClick={() => setIsOpen(!isOpen)}
         >
@@ -136,7 +134,7 @@ export const Navbar = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.95 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-x-4 top-24 z-50 p-8 rounded-[2.5rem] bg-white/90 backdrop-blur-2xl border border-brand-border shadow-2xl lg:hidden"
+            className="fixed inset-x-4 top-24 z-50 p-8 rounded-[2.5rem] bg-white/90 backdrop-blur-2xl border border-slate-200 shadow-2xl lg:hidden"
           >
             <nav className="flex flex-col gap-6 mb-10">
               {siteConfig.nav.map((item, i) => (
@@ -149,8 +147,8 @@ export const Navbar = () => {
                   <Link
                     href={item.href}
                     className={cn(
-                      "text-3xl font-black uppercase italic tracking-tighter transition-colors",
-                      pathname === item.href ? "text-brand-blue" : "text-brand-dark hover:text-brand-blue"
+                      "text-3xl font-black uppercase tracking-tighter transition-colors",
+                      pathname === item.href ? "text-orange-600" : "text-slate-900 hover:text-orange-600"
                     )}
                   >
                     {item.title}
@@ -159,8 +157,11 @@ export const Navbar = () => {
               ))}
             </nav>
 
-            <Button className="w-full h-16 rounded-2xl text-lg font-black uppercase italic tracking-widest nexora-gradient">
-              Get Started <ArrowRight className="ml-2 w-5 h-5" />
+            <Button 
+              onClick={() => window.open(siteConfig.contact.whatsapp, "_blank")}
+              className="w-full h-16 rounded-2xl text-lg font-black uppercase tracking-widest bg-orange-600 hover:bg-orange-700 text-white"
+            >
+              Get Free Quote <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </motion.div>
         )}
